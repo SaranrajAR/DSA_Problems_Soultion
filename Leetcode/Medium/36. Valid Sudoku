@@ -1,0 +1,35 @@
+class Solution {
+    public boolean isSafe(char[][] board,int row,int col){
+        char val=board[row][col];
+        for(int i=0;i<9;i++){
+            if(board[row][i]==val && i!=col) return false;
+            if(board[i][col]==val && i!=row) return false;
+        }
+        int R=row/3;
+        int C=col/3;
+        R=R*3;
+        C=C*3;
+        int RR=R+3;
+        int CC=C+3;
+        for(int i=R;i<RR;i++){
+            for(int j=C;j<CC;j++){
+                if(board[i][j]==val && (i!=row || j!=col)) return false;
+            }
+        }
+        return true;
+    }
+    public boolean helper(char[][] board){
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if(board[i][j]!='.'){
+                    if(isSafe(board,i,j)) continue;
+                    else return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean isValidSudoku(char[][] board) {
+        return helper(board);
+    }
+}
